@@ -44,12 +44,10 @@ class UpdateUserRequest extends FormRequest
             'username.unique' => 'El nombre de usuario ya está en uso',
             'username.max' => 'El nombre de usuario no puede tener más de 80 caracteres',
             'password.regex' => 'La contraseña debe tener al menos :min caracteres y contener al menos un número y un símbolo',
-            // 'password.numbers' => 'La contraseña debe contener al menos un número',
-            // 'password.symbols' => 'La contraseña debe contener al menos un símbolo',
-            // 'password.min' => 'La contraseña debe tener al menos 6 caracteres',
             'email.required' => 'El correo electrónico es requerido',
             'email.unique' => 'El correo electrónico ya está en uso',
             'role.required' => 'El rol es requerido',
+            'is_active.requires' => 'La condición activo es requerida'
         ];
     }
 }

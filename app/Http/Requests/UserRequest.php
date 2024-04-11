@@ -50,6 +50,7 @@ class UserRequest extends FormRequest
             'email.required' => 'El correo electrónico es requerido',
             'email.unique' => 'El correo electrónico ya está en uso',
             'role.required' => 'El rol es requerido',
+            'is_active.requires' => 'La condición activo es requerida'
         ];
     }
 }
