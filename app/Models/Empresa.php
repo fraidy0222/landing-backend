@@ -23,6 +23,6 @@ class Empresa extends Model
         'facebook',
         'youtube',
         'twitter',
-        'linkend',
+        'linkedin',
     ];
 }

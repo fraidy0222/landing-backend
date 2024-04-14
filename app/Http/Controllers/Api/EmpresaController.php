@@ -65,6 +65,29 @@ class EmpresaController extends Controller
 
     public function storeInfoEmpresa(Request $request, Empresa $empresa)
     {
+        $rules = [
+            'director' => 'nullable|max:255',
+            'slogan' => 'nullable|max:255',
+            'resumen' => 'nullable|max:255',
+            'facebook' => 'nullable|url:https,http',
+            'youtube' => 'nullable|url:https,http',
+            'twitter' => 'nullable|url:https,http',
+            'linkend' => 'nullable|url:https,http',
+        ];
+
+        $message = [
+            'director.max' => 'El campo director no puede tener más de 255 caracteres',
+            'slogan.max' => 'El campo slogan no puede tener más de 255 caracteres',
+            'resumen.max' => 'El campo resumen no puede tener más de 255 caracteres',
+            'resumen.url' => 'El campo resumen debe ser una URL válida',
+            'facebook.url' => 'El campo Facebook debe ser una URL válida',
+            'youtube.url' => 'El campo Youtube debe ser una URL válida',
+            'twitter.url' => 'El campo Twitter debe ser una URL válida',
+            'linkedin.url' => 'El campo LinkedIn debe ser una URL válida',
+        ];
+
+        $this->validate($request, $rules, $message);
+
         $empresa->fill($request->only([
             'director',
             'slogan',
@@ -82,6 +105,29 @@ class EmpresaController extends Controller
 
     public function updateInfoEmpresa(Request $request, Empresa $empresa)
     {
+        $rules = [
+            'director' => 'nullable|max:255',
+            'slogan' => 'nullable|max:255',
+            'resumen' => 'nullable|max:255',
+            'facebook' => 'nullable|url:https,http',
+            'youtube' => 'nullable|url:https,http',
+            'twitter' => 'nullable|url:https,http',
+            'linkedin' => 'nullable|url:https,http',
+        ];
+
+        $message = [
+            'director.max' => 'El campo director no puede tener más de 255 caracteres',
+            'slogan.max' => 'El campo slogan no puede tener más de 255 caracteres',
+            'resumen.max' => 'El campo resumen no puede tener más de 255 caracteres',
+            'resumen.url' => 'El campo resumen debe ser una URL válida',
+            'facebook.url' => 'El campo Facebook debe ser una URL válida',
+            'youtube.url' => 'El campo Youtube debe ser una URL válida',
+            'twitter.url' => 'El campo Twitter debe ser una URL válida',
+            'linkedin.url' => 'El campo LinkedIn debe ser una URL válida',
+        ];
+
+        $this->validate($request, $rules, $message);
+
         $empresa->fill($request->only([
             'director',
             'slogan',

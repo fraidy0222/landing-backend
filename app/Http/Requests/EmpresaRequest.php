@@ -24,19 +24,13 @@ class EmpresaRequest extends FormRequest
         return [
             'nombre' => 'required',
             'alias' => 'nullable',
-            'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2024',
+            'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:4024',
             'telefono' => 'nullable',
             'direccion' => 'nullable',
             'correo' => 'required|email',
-            'director' => 'nullable',
-            'slogan' => 'nullable',
             'video_institucional' => 'nullable',
-            // 'video_institucional' => 'nullable|mimetypes:video/avi,video/mpeg,video/mp4,video/mkv|max:2048',
-            'resumen' => 'nullable',
-            'facebook' => 'nullable',
-            'youtube' => 'nullable',
-            'twitter' => 'nullable',
-            'linkend' => 'nullable',
+            // 'video_institucional' => 'nullable|mimetypes:video/avi,video/mpeg,video/mp4,video/mkv|max:4048',
+
         ];
     }
 
@@ -46,9 +40,15 @@ class EmpresaRequest extends FormRequest
             'nombre.required' => 'El nombre es requerido',
             'logo.image' => 'La portada debe ser una imagen',
             'logo.mimes' => 'La portada debe ser una imagen con el formáto jpeg,jpg,png,gif,svg',
-            'logo.max' => 'La portada debe ser menor a 2MB',
+            'logo.max' => 'La portada debe ser menor a 4MB',
             'correo.required' => 'El correo es requerido',
             'correo.email' => 'El correo no es válido',
+            'resumen.url' => 'El resumen debe ser una URL válida',
+            'facebook.url' => 'El facebook debe ser una URL válida',
+            'youtube.url' => 'El youtube debe ser una URL válida',
+            'twitter.url' => 'El twitter debe ser una URL válida',
+            'linkend.url' => 'El linkend debe ser una URL válida',
+
         ];
     }
 }
