@@ -18,7 +18,7 @@ class FaqResource extends JsonResource
             'id' => $this->id,
             'respuesta' => $this->respuesta,
             'pregunta' => $this->pregunta,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->format('Y-m-d - h:m'),
         ];
     }
 }
