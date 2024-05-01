@@ -46,10 +46,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::post('/emailById/{user}', 'verifyEmailById');
         });
     });
-    // Route::post('/verify/user', [UsersController::class, 'verifyUser']);
-    // Route::post('/verify/email', [UsersController::class, 'verifyEmail']);
-    // Route::post('/verify/userById/{user}', [UsersController::class, 'verifyUserById']);
-    // Route::post('/verify/emailById/{user}', [UsersController::class, 'verifyEmailById']);
 
     Route::resource('/faqs', FaqController::class);
     Route::resource('/categoryNew', CategoriaNoticiaController::class);
