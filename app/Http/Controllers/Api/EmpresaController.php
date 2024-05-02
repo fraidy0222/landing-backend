@@ -66,9 +66,9 @@ class EmpresaController extends Controller
     public function storeInfoEmpresa(Request $request, Empresa $empresa)
     {
         $rules = [
-            'director' => 'nullable|max:255',
+            'director' => 'nullable|max:100',
             'slogan' => 'nullable|max:255',
-            'resumen' => 'nullable|max:255',
+            'resumen' => 'nullable',
             'facebook' => 'nullable|url:https,http',
             'youtube' => 'nullable|url:https,http',
             'twitter' => 'nullable|url:https,http',
@@ -76,10 +76,8 @@ class EmpresaController extends Controller
         ];
 
         $message = [
-            'director.max' => 'El campo director no puede tener más de 255 caracteres',
+            'director.max' => 'El campo director no puede tener más de 100 caracteres',
             'slogan.max' => 'El campo slogan no puede tener más de 255 caracteres',
-            'resumen.max' => 'El campo resumen no puede tener más de 255 caracteres',
-            'resumen.url' => 'El campo resumen debe ser una URL válida',
             'facebook.url' => 'El campo Facebook debe ser una URL válida',
             'youtube.url' => 'El campo Youtube debe ser una URL válida',
             'twitter.url' => 'El campo Twitter debe ser una URL válida',
@@ -106,9 +104,9 @@ class EmpresaController extends Controller
     public function updateInfoEmpresa(Request $request, Empresa $empresa)
     {
         $rules = [
-            'director' => 'nullable|max:255',
+            'director' => 'nullable|max:100',
             'slogan' => 'nullable|max:255',
-            'resumen' => 'nullable|max:255',
+            'resumen' => 'nullable',
             'facebook' => 'nullable|url:https,http',
             'youtube' => 'nullable|url:https,http',
             'twitter' => 'nullable|url:https,http',
@@ -116,10 +114,8 @@ class EmpresaController extends Controller
         ];
 
         $message = [
-            'director.max' => 'El campo director no puede tener más de 255 caracteres',
+            'director.max' => 'El campo director no puede tener más de 100 caracteres',
             'slogan.max' => 'El campo slogan no puede tener más de 255 caracteres',
-            'resumen.max' => 'El campo resumen no puede tener más de 255 caracteres',
-            'resumen.url' => 'El campo resumen debe ser una URL válida',
             'facebook.url' => 'El campo Facebook debe ser una URL válida',
             'youtube.url' => 'El campo Youtube debe ser una URL válida',
             'twitter.url' => 'El campo Twitter debe ser una URL válida',
@@ -145,6 +141,15 @@ class EmpresaController extends Controller
 
     public function uploadVideo(Request $request, Empresa $empresa)
     {
+        // $rules = [
+        //     'video_institucional' => 'nullable|max:1024'
+        // ];
+
+        // $message = [
+        //     'video_institucional.max' => 'El video institucional no puede tener mas 1mb'
+        // ];
+
+        // $this->validate($request, $rules, $message);
 
         if ($request->hasFile('video_institucional')) {
             $video = $request->file('video_institucional');
@@ -163,7 +168,7 @@ class EmpresaController extends Controller
         return response()->json(['error' => 'No se recibió ningún video'], 400);
     }
 
-    public function deleteVideo(Request $request, Empresa $empresa)
+    public function deleteVideo(Empresa $empresa)
     {
 
         Storage::delete('public/' . $empresa->video_institucional);

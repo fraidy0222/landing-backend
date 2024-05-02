@@ -22,15 +22,12 @@ class EmpresaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => 'required',
-            'alias' => 'nullable',
+            'nombre' => 'required|max:200',
+            'alias' => 'nullable|max:50',
             'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:4024',
-            'telefono' => 'nullable',
-            'direccion' => 'nullable',
-            'correo' => 'required|email',
-            'video_institucional' => 'nullable',
-            // 'video_institucional' => 'nullable|mimetypes:video/avi,video/mpeg,video/mp4,video/mkv|max:4048',
-
+            'telefono' => 'nullable|min:10|max:20',
+            'direccion' => 'nullable:200',
+            'correo' => 'required|email|max:150',
         ];
     }
 
@@ -38,17 +35,16 @@ class EmpresaRequest extends FormRequest
     {
         return [
             'nombre.required' => 'El nombre es requerido',
+            'nombre.max' => 'El nombre no puede tener más de 200 caracteres',
+            'alias.max' => 'El alias no puede tener más de 50 caracteres',
             'logo.image' => 'La portada debe ser una imagen',
             'logo.mimes' => 'La portada debe ser una imagen con el formáto jpeg,jpg,png,gif,svg',
             'logo.max' => 'La portada debe ser menor a 4MB',
+            'telefono.min' => 'El teléfono tiene que tener 10 dígitos como mínimo',
+            'telefono.max' => 'El teléfono no puede tener más de 20 dígitos',
             'correo.required' => 'El correo es requerido',
             'correo.email' => 'El correo no es válido',
-            'resumen.url' => 'El resumen debe ser una URL válida',
-            'facebook.url' => 'El facebook debe ser una URL válida',
-            'youtube.url' => 'El youtube debe ser una URL válida',
-            'twitter.url' => 'El twitter debe ser una URL válida',
-            'linkend.url' => 'El linkend debe ser una URL válida',
-
+            'correo.max' => 'El correo no puede tener más de 150 caracteres',
         ];
     }
 }

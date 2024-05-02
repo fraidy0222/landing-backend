@@ -111,7 +111,7 @@ class UsersController extends Controller
 
         $request->validate($rules, $messages);
 
-        return response()->json(['message' => 'El nombre de usuario es válido']);
+        return response()->json(['message' => 'El correo es válido']);
     }
 
     public function verifyUserById(Request $request, User $user)

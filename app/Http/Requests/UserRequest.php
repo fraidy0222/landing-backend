@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
             'last_name' => 'required|max:150',
             'username' => 'required|max:80|unique:users,username',
             'password' => ['required', Password::min(6)->symbols()->numbers()],
-            'email' => 'required|unique:users,email',
+            'email' => 'required|max:150|unique:users,email',
             'role' => 'required',
             'is_active' => 'required'
         ];
@@ -38,8 +38,8 @@ class UserRequest extends FormRequest
         return [
             'name.required' => 'El nombre es requerido',
             'name.max' => 'El nombre no puede tener más de 80 caracteres',
-            'last_name.required' => 'El apellido es requerido',
-            'last_name.max' => 'El apellido no puede tener más de 150 caracteres',
+            'last_name.required' => 'Los apellidos son requeridos',
+            'last_name.max' => 'Los apellidos no puede tener más de 150 caracteres',
             'username.required' => 'El nombre de usuario es requerido',
             'username.unique' => 'El nombre de usuario ya está en uso',
             'username.max' => 'El nombre de usuario no puede tener más de 80 caracteres',
@@ -49,6 +49,7 @@ class UserRequest extends FormRequest
             'password.min' => 'La contraseña debe tener al menos 6 caracteres',
             'email.required' => 'El correo electrónico es requerido',
             'email.unique' => 'El correo electrónico ya está en uso',
+            'email.max' => 'El correo no puede tener más de 150 caracteres',
             'role.required' => 'El rol es requerido',
             'is_active.requires' => 'La condición activo es requerida'
         ];

@@ -18,7 +18,15 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
             'username' => 'administrador',
-            'role' => 'admin'
+            'role' => 'Administrador'
+        ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Lerdis',
+            'last_name' => 'Regalado Pereira',
+            'email' => 'lerdis@gmail.com',
+            'username' => 'lerdis',
+            'role' => 'Editor'
         ]);
 
         $categories = ['Nacional', 'Internacional', 'Deportes', 'Culturales'];
