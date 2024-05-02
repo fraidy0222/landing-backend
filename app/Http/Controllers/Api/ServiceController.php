@@ -28,18 +28,18 @@ class ServiceController extends Controller
         $rules = [
             'nombre' => 'required|max:150',
             'resumen' => 'nullable',
-            'imagen' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:1024',
+            'imagen' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2024',
         ];
 
         $messages = [
             'nombre.required' => 'El nombre es requerido',
             'imagen.image' => 'La imagen debe ser una imagen',
             'imagen.mimes' => 'La imagen debe ser una imagen con el formáto jpeg,jpg,png,gif,svg',
-            'imagen.max' => 'La imagen debe ser menor a 1MB',
+            'imagen.max' => 'La imagen debe ser menor a 2MB',
         ];
 
         $this->validate($request, $rules, $messages);
- 
+
         if ($request->hasFile('imagen')) {
             $imagen = $request->file('imagen');
             if ($imagen != null) {
@@ -58,7 +58,7 @@ class ServiceController extends Controller
         ]);
 
         $service->save();
-        
+
         return response()->json(['message' => 'Servicio creado correctamente'], 200);
     }
 
@@ -82,14 +82,14 @@ class ServiceController extends Controller
         $rules = [
             'nombre' => 'required|max:150',
             'resumen' => 'nullable',
-            'imagen' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:1024',
+            'imagen' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2024',
         ];
 
         $messages = [
             'nombre.required' => 'El nombre es requerido',
             'imagen.image' => 'La imagen debe ser una imagen',
             'imagen.mimes' => 'La imagen debe ser una imagen con el formáto jpeg,jpg,png,gif,svg',
-            'imagen.max' => 'La imagen debe ser menor a 1MB',
+            'imagen.max' => 'La imagen debe ser menor a 2MB',
         ];
 
         $this->validate($request, $rules, $messages);
@@ -105,23 +105,23 @@ class ServiceController extends Controller
         } else {
             $imagen = $service->imagen;
         }
- 
+
         $service->nombre = $request->nombre;
         $service->resumen = $request->resumen;
         $service->imagen = $imagen;
 
         $service->save();
-        
+
         return response()->json(['message' => 'Servicio editado correctamente'], 200);
     }
 
-     /**
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
         $service = Service::find($id);
-        
+
         Storage::delete('public/' . $service->imagen);
         $service->delete();
 
