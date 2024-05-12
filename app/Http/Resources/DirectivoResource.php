@@ -19,7 +19,7 @@ class DirectivoResource extends JsonResource
             'nombre' => $this->nombre,
             'prioridad' => $this->prioridad,
             'cargo' => $this->cargo,
-            'imagen' => asset('storage/' . $this->imagen),
+            'imagen' => $this->imagen ? asset('storage/' . $this->imagen) : '',
             'biografia' => $this->biografia
         ];
     }

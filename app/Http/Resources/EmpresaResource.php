@@ -14,25 +14,11 @@ class EmpresaResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // $redes = [
-        //     'facebook' => $this->facebook,
-        //     'twitter' => $this->twitter,
-        //     'youtube' => $this->youtube,
-        //     'linkedin' => $this->linkedin,
-        // ];
-
-        // $redesObjetos = array_map(function ($nombre, $url) {
-        //     return [
-        //         'name' => ucfirst($nombre),
-        //         'url' => $url,
-        //     ];
-        // }, array_keys($redes), $redes);
-
         return [
             'id' => $this->id,
             'nombre' => $this->nombre,
             'alias' => $this->alias,
-            'logo' =>  asset('storage/' . $this->logo),
+            'logo' => $this->logo ? asset('storage/' . $this->logo) : '',
             'telefono' => $this->telefono,
             'direccion' => $this->direccion,
             'correo' => $this->correo,

@@ -7,6 +7,7 @@ use App\Http\Requests\EmpresaRequest;
 use App\Models\Empresa;
 use Illuminate\Http\Request;
 use App\Http\Resources\EmpresaResource;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 
 class EmpresaController extends Controller
@@ -139,34 +140,72 @@ class EmpresaController extends Controller
         return response()->json(['message' => 'Información editada satisfactoriamente'], 200);
     }
 
+    // public function uploadVideo(Request $request, Empresa $empresa)
+    // {
+    //     // Definir el tamaño máximo permitido en bytes
+    //     // 4 GB en bytes = 4 * 1024 * 1024 * 1024
+    //     $maxSize = 1 * 1024 * 1024 * 1024;
+
+    //     if ($request->hasFile('video_institucional')) {
+    //         $video = $request->file('video_institucional');
+
+    //         // Validar el tamaño del archivo
+    //         if ($video->getSize() > $maxSize) {
+    //             return response()->json(['error' => 'El video no puede ser mayor a 4 GB'], 400);
+    //         }
+
+    //         Storage::delete('public/' . $empresa->video_institucional);
+    //         $videoPath = $video->store('empresa/video', 'public');
+    //         $empresa->video_institucional = $videoPath;
+    //         $empresa->save();
+
+    //         // Devuelve una respuesta de éxito
+    //         return response()->json(['message' => 'Video subido correctamente']);
+    //     }
+
+    //     // Devuelve una respuesta de error si no se recibió ningún archivo
+    //     return response()->json(['error' => 'No se recibió ningún video'], 400);
+    // }
+
     public function uploadVideo(Request $request, Empresa $empresa)
     {
-        // $rules = [
-        //     'video_institucional' => 'nullable|max:1024'
-        // ];
-
-        // $message = [
-        //     'video_institucional.max' => 'El video institucional no puede tener mas 1mb'
-        // ];
-
-        // $this->validate($request, $rules, $message);
+        // Tamaño máximo permitido en bytes (4 GB)
+        $maxSize = 1 * 1024 * 1024 * 1024;
 
         if ($request->hasFile('video_institucional')) {
             $video = $request->file('video_institucional');
-            Storage::delete('public/' . $empresa->video_institucional);
-            $video = $video->store('empresa/video', 'public');
 
-            $empresa->video_institucional = $video;
+            // Validar el tamaño del archivo
+            if ($video->getSize() > $maxSize) {
+                return response()->json(['error' => 'El video no puede ser mayor a 4 GB'], 400);
+            }
 
-            $empresa->save();
+            // Validar el tipo MIME del archivo (opcional)
+            $allowedMimeTypes = ['video/mp4', 'video/avi', 'video/mpg', 'video/mkv'];
+            if (!in_array($video->getMimeType(), $allowedMimeTypes)) {
+                return response()->json(['error' => 'Formato de video no válido'], 400);
+            }
 
-            // Devuelve una respuesta de éxito
-            return response()->json(['message' => 'Video subido correctamente']);
+            // Guardar el nuevo video
+            try {
+                Storage::delete('public/' . $empresa->video_institucional);
+                $videoPath = $video->store('empresa/video', 'public');
+                $empresa->video_institucional = $videoPath;
+                $empresa->save();
+
+                return response()->json(['message' => 'Video subido correctamente']);
+            } catch (QueryException $e) {
+                // Manejo de errores de base de datos
+                return response()->json(['error' => 'Error al guardar el video'], 500);
+            } catch (\Exception $e) {
+                // Otros errores (almacenamiento, etc.)
+                return response()->json(['error' => 'Error al subir el video'], 500);
+            }
         }
 
-        // Devuelve una respuesta de error si no se recibió ningún blob
         return response()->json(['error' => 'No se recibió ningún video'], 400);
     }
+
 
     public function deleteVideo(Empresa $empresa)
     {

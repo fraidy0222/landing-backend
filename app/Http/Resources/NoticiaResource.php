@@ -17,7 +17,7 @@ class NoticiaResource extends JsonResource
         return [
             'id' => $this->id,
             'titulo' => $this->titulo,
-            'portada' => asset('storage/' . $this->portada),
+            'portada' => $this->portada ? asset('storage/' . $this->portada) : '',
             'subtitulo' => $this->subtitulo,
             'descripcion' => $this->descripcion,
             'user_id' => $this->user->id,

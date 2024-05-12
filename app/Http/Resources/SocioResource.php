@@ -18,7 +18,7 @@ class SocioResource extends JsonResource
             'id' => $this->id,
             'nombre' => $this->nombre,
             'web' => $this->web,
-            'logo' => asset('storage/'.$this->logo),
+            'logo' => $this->logo ? asset('storage/' . $this->logo) : '',
         ];
     }
 }

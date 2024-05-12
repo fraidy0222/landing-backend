@@ -18,7 +18,7 @@ class ServiceResource extends JsonResource
             'id' => $this->id,
             'nombre' => $this->nombre,
             'resumen' => $this->resumen,
-            'imagen' => asset('storage/'.$this->imagen)
+            'imagen' => $this->imagen ? asset('storage/' . $this->imagen) : ''
         ];
     }
 }
