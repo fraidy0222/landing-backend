@@ -66,4 +66,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::patch('/updateInfoEmpresa/{empresa}', [EmpresaController::class, 'UpdateInfoEmpresa']);
     Route::put('/upload/{empresa}', [EmpresaController::class, 'uploadVideo']);
     Route::delete('/deleteVideo/{empresa}', [EmpresaController::class, 'deleteVideo']);
+    Route::get('/video/{empresa}', [EmpresaController::class, 'showVideo']);
 });

@@ -8,6 +8,8 @@ use App\Models\Empresa;
 use Illuminate\Http\Request;
 use App\Http\Resources\EmpresaResource;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
 class EmpresaController extends Controller
@@ -140,33 +142,6 @@ class EmpresaController extends Controller
         return response()->json(['message' => 'Información editada satisfactoriamente'], 200);
     }
 
-    // public function uploadVideo(Request $request, Empresa $empresa)
-    // {
-    //     // Definir el tamaño máximo permitido en bytes
-    //     // 4 GB en bytes = 4 * 1024 * 1024 * 1024
-    //     $maxSize = 1 * 1024 * 1024 * 1024;
-
-    //     if ($request->hasFile('video_institucional')) {
-    //         $video = $request->file('video_institucional');
-
-    //         // Validar el tamaño del archivo
-    //         if ($video->getSize() > $maxSize) {
-    //             return response()->json(['error' => 'El video no puede ser mayor a 4 GB'], 400);
-    //         }
-
-    //         Storage::delete('public/' . $empresa->video_institucional);
-    //         $videoPath = $video->store('empresa/video', 'public');
-    //         $empresa->video_institucional = $videoPath;
-    //         $empresa->save();
-
-    //         // Devuelve una respuesta de éxito
-    //         return response()->json(['message' => 'Video subido correctamente']);
-    //     }
-
-    //     // Devuelve una respuesta de error si no se recibió ningún archivo
-    //     return response()->json(['error' => 'No se recibió ningún video'], 400);
-    // }
-
     public function uploadVideo(Request $request, Empresa $empresa)
     {
         // Tamaño máximo permitido en bytes (4 GB)
@@ -181,9 +156,9 @@ class EmpresaController extends Controller
             }
 
             // Validar el tipo MIME del archivo (opcional)
-            $allowedMimeTypes = ['video/mp4', 'video/avi', 'video/mpg', 'video/mkv'];
+            $allowedMimeTypes = ['video/mp4'];
             if (!in_array($video->getMimeType(), $allowedMimeTypes)) {
-                return response()->json(['error' => 'Formato de video no válido'], 400);
+                return response()->json(['error' => 'El formato de video no válido. Tiene que ser el formato mp4'], 400);
             }
 
             // Guardar el nuevo video
@@ -216,5 +191,16 @@ class EmpresaController extends Controller
         $empresa->save();
 
         return response()->json(['message' => 'Video eliminado correctamente']);
+    }
+
+    public function showVideo(Empresa $empresa)
+    {
+        $filePath = 'public/' . $empresa->video_institucional;
+
+        if (Storage::exists($filePath)) {
+            return response()->file(Storage::path($filePath));
+        } else {
+            return response()->json(['error' => 'Video no encontrado'], 404);
+        }
     }
 }
