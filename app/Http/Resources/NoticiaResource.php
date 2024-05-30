@@ -30,8 +30,8 @@ class NoticiaResource extends JsonResource
             'estado' => [
                 'nombre' => $this->estado->nombre,
             ],
-            'fecha_creacion' => $this->created_at->format('Y-m-d - h:m'),
-            'fecha_modificacion' => $this->updated_at->format('Y-m-d - h:m')
+            'fecha_creacion' => $this->created_at->format('Y-m-d'),
+            'fecha_modificacion' => $this->updated_at->format('Y-m-d')
         ];
     }
 }
