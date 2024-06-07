@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('titulo', 150);
             $table->string('portada')->nullable();
             $table->string('subtitulo')->nullable();
-            $table->string('descripcion', 255)->nullable();
+            $table->string('descripcion')->nullable();
             $table->foreignId('user_id')
-            ->constrained()
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
+                ->constrained()
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }
