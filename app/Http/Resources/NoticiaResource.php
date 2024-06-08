@@ -22,7 +22,7 @@ class NoticiaResource extends JsonResource
             'descripcion' => $this->descripcion,
             'user_id' => $this->user->id,
 
-            'usuario' => [
+            'user' => [
                 'name' => $this->user->name,
                 'email' => $this->user->email,
             ],

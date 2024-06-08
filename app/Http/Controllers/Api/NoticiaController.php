@@ -15,9 +15,16 @@ class NoticiaController extends Controller
      */
     public function index()
     {
+        $search = request()->input('searchNoticia');
+
+        $noticias = Noticia::query()->when($search, function ($query, $search) {
+            $query->where('titulo', 'LIKE', "%{$search}%")
+                ->orWhere('user.name', 'LIKE', "%$search%");
+        })->with('user', 'categorias', 'estado', 'comment')->paginate(10);
+
         return response()->json(
             [
-                'noticias' => NoticiaResource::collection(Noticia::all()),
+                'noticias' => NoticiaResource::collection($noticias),
             ],
             200
         );
