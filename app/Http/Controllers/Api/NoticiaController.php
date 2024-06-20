@@ -13,14 +13,46 @@ class NoticiaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $search = request()->input('searchNoticia');
+    // public function index()
+    // {
+    //     // $search = request()->searchNoticia;
+    //     $search = request()->searchNoticia;
 
-        $noticias = Noticia::query()->when($search, function ($query, $search) {
-            $query->where('titulo', 'LIKE', "%{$search}%")
-                ->orWhere('user.name', 'LIKE', "%$search%");
-        })->with('user', 'categorias', 'estado', 'comment')->paginate(10);
+    //     $noticias = Noticia::join('users', 'noticias.user_id', '=', 'users.id')
+    //         ->when($search, function ($query) use ($search) {
+    //             $query->where(function ($q) use ($search) {
+    //                 $q->where('noticias.titulo', 'LIKE', "%$search%")
+    //                     ->orWhere('noticias.subtitulo', 'LIKE', "%$search%")
+    //                     ->orWhere('noticias.descripcion', 'LIKE', "%$search%")
+    //                     ->orWhere('users.name', 'LIKE', "%$search%");
+    //             });
+    //         })
+    //         ->select('noticias.*')
+    //         ->get();
+
+    //     return $noticias;
+
+    // return response()->json(
+    //     [
+    //         'noticias' => NoticiaResource::collection($noticias),
+    //     ],
+    //     200
+    // );
+    // }
+
+    public function index(Request $request)
+    {
+        $query = Noticia::query();
+
+        if ($request->has('searchNoticia')) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->searchNoticia . '%');
+            })
+                ->orWhere('titulo', 'LIKE', '%' . $request->searchNoticia . '%')
+                ->orWhere('subtitulo', 'LIKE', '%' . $request->searchNoticia . '%');
+        }
+
+        $noticias = $query->with('user')->paginate(10);
 
         return response()->json(
             [

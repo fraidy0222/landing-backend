@@ -26,7 +26,7 @@ class NoticiaRequest extends FormRequest
             'subtitulo' => 'nullable',
             'descripcion' => 'nullable',
             'portada' => 'nullable',
-            'portada' => 'nullable',
+            // 'portada' => 'nullable',
             'user_id' => 'required',
             'categorias' => 'required',
             'estado_noticia_id' => 'required',
