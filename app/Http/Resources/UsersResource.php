@@ -23,6 +23,7 @@ class UsersResource extends JsonResource
             // 'password' => $this->password,
             'role' => $this->roleToArray(),
             'is_active' => $this->is_active,
+            'password' => $this->password
         ];
     }
 

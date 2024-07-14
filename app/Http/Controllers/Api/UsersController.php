@@ -9,6 +9,7 @@ use App\Http\Resources\UsersResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
@@ -19,7 +20,10 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return response()->json(['users' => UsersResource::collection(User::all())], 200);
+        $users = DB::table('users')
+            ->where('username', '<>', 'administrador')->get();
+
+        return response()->json(['users' => UsersResource::collection($users)], 200);
     }
 
     /**
@@ -45,7 +49,6 @@ class UsersController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-
         if (is_null($request->password)) {
             // $user->password = Hash::make($request->password);
             $user->update($request->validated());

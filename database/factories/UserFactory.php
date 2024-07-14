@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'last_name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'username' => fake()->name,
-            'role' => fake()->name,
+            'role' => 'Editor',
             'is_active' => fake()->boolean(true),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
